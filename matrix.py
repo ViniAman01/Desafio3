@@ -27,6 +27,9 @@ try:
     print()
 
     coordinates = np.array([[1,1],[-1,-1],[0,1],[0,-1],[1,0],[-1,0],[1,-1],[-1,1]]) #Aqui são as coordenadas para encontrar os elementos adjancentes
+    min_std = -1
+    element = -1
+    index_element = []
 
     for aux_matrix in [matrix_pow,matrix_log10,matrix_log2]: #Analisamos as 3 matrizes 
         for i in range(m): #Indice para percorrer as linhas 
@@ -36,9 +39,16 @@ try:
                     if i+cd[0] < m and j+cd[1] < n and i+cd[0] >= 0 and j+cd[1] >= 0: #Condições para garatir que não vamos sair do alcance da matriz
                        sub_matrix.append(aux_matrix[i+cd[0]][j+cd[1]]) #Adicionamos os valores adjancentes de cada elemento para a submatriz
                 sub_matrix.append(aux_matrix[i][j]) #Adicionamos o próprio elemento para a submatriz
-                print(f"\nSubmatriz de elementos adjacentes do elemento ({aux_matrix[i][j]}): ")
-                print(sub_matrix)
-                print()
-                print(f'Desvio padrão dos elementos adjancentes ao elemento ({aux_matrix[i][j]}):   {np.std(np.array(sub_matrix,dtype=np.float64))}') #Exibimos o desvio padrão calculado
+                if i == 0 and j == 0 and min_std == -1:
+                    min_std = np.std(np.array(sub_matrix,dtype=np.float64))
+                    element = aux_matrix[i][j]
+                    index_element = [i,j]
+                current_std = np.std(np.array(sub_matrix,dtype=np.float64))
+                if current_std < min_std:
+                    min_std = current_std
+                    element = aux_matrix[i][j]
+                    index_element = [i,j]
+
+    print(f'Menor desvio padrão dos elementos adjacentes foi do elemento {element}, posição [{index_element[0]},{index_element[1]}]: {min_std}')
 except AssertionError: #Caso o usúario tenha digitado um valor fora de algum intervalo, a mensagem de erro é apresentada.
     print("Você digitou um valor fora do intervalo.")
