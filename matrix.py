@@ -6,7 +6,7 @@ try:
     exp = float(input("Informe o expoente da potência no intervalo [0,1]: "))
     assert exp >= 0 and exp <= 1 and m > 0 and n > 0 #O assert garante que o usúario não digitará valores inválidos
 
-    matrix = np.random.randint(128,size=(m,n),dtype=np.int8) #Aqui é gerado um array do numpy, com valor máximo até 127, dimensões mxn e do tipo inteiro de 8 bits
+    matrix = np.random.randint(1,255,size=(m,n),dtype=np.uint8) #Aqui é gerado um array do numpy, com valor máximo até 255, dimensões mxn e do tipo inteiro de 8 bits
     print("\nMatriz de entrada:")
     print(matrix)
     print()
